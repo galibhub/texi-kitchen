@@ -6,7 +6,10 @@ import ReadyCard from "./cards/ReadyCard";
 
 
 const OrderContainer = ({ ordersPromise }) => {
-  const orders = use(ordersPromise);
+//   const orders = use(ordersPromise); data te raklm karon jokhon ready order e click hobe useState er maddhome jate remove hoiye jay current order list theek//
+
+const data = use(ordersPromise);
+const [orders,setOrders]=useState(data);
 
   const [cookingItems, setCookingItems] = useState([]);
 
@@ -34,6 +37,11 @@ const OrderContainer = ({ ordersPromise }) => {
     //2.cooking items er vitor theke order k remove koro
     const remaining = cookingItems.filter((item) => item.id !== order.id);
     setCookingItems(remaining);
+
+    //3.current order theke remove korte hobe jokhon click kora hobe cooking reay  theke
+
+    const remainigOrders=orders.filter((item)=>item.id !=order.id);
+    setOrders(remainigOrders);
   };
 
   return (
