@@ -32,6 +32,8 @@ const [orders,setOrders]=useState(data);
   // handle ready//
 
   const handleCooking = (order) => {
+
+    order.coockedAt=new Date().toLocaleTimeString();
     //1.ready items er vitore order k dhukao
     const newReadyItems = [...readyItems, order];
     setreadyItems(newReadyItems);

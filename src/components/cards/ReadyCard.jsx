@@ -6,6 +6,7 @@ const ReadyCard = ({order}) => {
             <h2 className="font-bold text-2xl">{order.order_title}</h2>
             <p>Table No: {order.table_no}</p>
                <p>Table No:Waiter Id: {order.waiterId}</p>
+               <p>Cooked At: {order.coockedAt} </p>
         </div>
     );
 };
