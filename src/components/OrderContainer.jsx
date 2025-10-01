@@ -3,6 +3,7 @@ import States from "./States";
 import OrderCard from "./cards/OrderCard";
 import CookingCard from "./cards/CookingCard";
 import ReadyCard from "./cards/ReadyCard";
+import { toast } from 'react-toastify';
 
 
 const OrderContainer = ({ ordersPromise }) => {
@@ -16,11 +17,12 @@ const [orders,setOrders]=useState(data);
   const [readyItems, setreadyItems] = useState([]);
 
   const handleOrder = (order) => {
+    toast.success("Order Placed!");
     //When any card will be clicked from current orders then the card will be added into cooking now section//
 
     const isExist = cookingItems.find((item) => item.id == order.id);
     if (isExist) {
-      alert("Already Exists");
+      toast.error("Order Already on processing!");
       return;
     }
     const newCookingItems = [...cookingItems, order];
