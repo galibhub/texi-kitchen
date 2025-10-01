@@ -2,22 +2,47 @@ import React, { use, useState } from "react";
 import States from "./States";
 import OrderCard from "./cards/OrderCard";
 import CookingCard from "./cards/CookingCard";
+import ReadyCard from "./cards/ReadyCard";
+
 
 const OrderContainer = ({ ordersPromise }) => {
   const orders = use(ordersPromise);
 
   const [cookingItems, setCookingItems] = useState([]);
 
+  const [readyItems, setreadyItems] = useState([]);
+
   const handleOrder = (order) => {
     //When any card will be clicked from current orders then the card will be added into cooking now section//
 
+    const isExist = cookingItems.find((item) => item.id == order.id);
+    if (isExist) {
+      alert("Already Exists");
+      return;
+    }
     const newCookingItems = [...cookingItems, order];
     setCookingItems(newCookingItems);
   };
 
+  // handle ready//
+
+  const handleCooking = (order) => {
+    //1.ready items er vitore order k dhukao
+    const newReadyItems = [...readyItems, order];
+    setreadyItems(newReadyItems);
+
+    //2.cooking items er vitor theke order k remove koro
+    const remaining = cookingItems.filter((item) => item.id !== order.id);
+    setCookingItems(remaining);
+  };
+
   return (
     <div>
-      <States cookingTotal={cookingItems.length} orderTotal={orders.length}></States>
+      <States
+        cookingTotal={cookingItems.length}
+        orderTotal={orders.length} 
+        readyTotal={readyItems.length}
+      ></States>
 
       <section className="w-11/12 mx-auto py-10 grid grid-cols-1 lg:grid-cols-12 gap-5">
         <div className="lg:col-span-7">
@@ -36,14 +61,22 @@ const OrderContainer = ({ ordersPromise }) => {
         <div className="lg:col-span-5 space-y-5">
           <h2 className="font-bold text-4xl">Coocking Now</h2>
           <div className="shadow p-10 space-y-5">
-
-            {
-                cookingItems.map(order=><CookingCard key={order.id} order={order}></CookingCard>)
-            }
+            {cookingItems.map((order) => (
+              <CookingCard
+                key={order.id}
+                order={order}
+                handleCooking={handleCooking}
+              ></CookingCard>
+            ))}
           </div>
 
           <h2 className="font-bold text-4xl">Order Ready</h2>
-          <div className="shadow p-10"></div>
+          <div className="shadow p-10 space-y-5">
+           {
+            readyItems.map(order=> <ReadyCard key={order.id} order={order}></ReadyCard>)
+        
+           }
+          </div>
         </div>
       </section>
     </div>
