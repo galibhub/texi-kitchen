@@ -7,7 +7,7 @@ const OrderContainer = ({ ordersPromise }) => {
   console.log(orders);
   return (
     <div>
-      <States></States>
+      <States orderTotal={orders.length}></States>
       
       <section className="w-11/12 mx-auto py-10 grid grid-cols-1 lg:grid-cols-12 gap-5">
 
